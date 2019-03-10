@@ -1,29 +1,38 @@
 #include <iostream>
 #include "extra.hpp"
 
-class sec_namespace::B; 
 
-int main(int argc, char **argv) {
+struct X {
 
-
-
-   Temple k;
-   k.kupa(4);
-
-
-
-
-   first_namespace::A  a;
-   for(int i=0;i<8;i++) {
-     if (i<9) { a.multiple(3,4); }
-       else { a.next(3); } 
-      
-            
-   }
-
+    virtual ~X() { } 
+};
 /*
-    sec_namespace::B b;
-    b.add(3,4);
+X::~X() {
+
+}
 */
+struct B : X {
+
+    ~B() {  }
+    
+};
+
+
+
+void usage1(int i);
+int main(int argc, char **argv) {
+   {
+  //  B b;
+   }
+   //  X* xxxx= new X();
+    // delete xxxx;
+    B *kk = new B();
+   //delete kk;
+
+   First f;
+  for(int i=0;i<5;++i)
+     usage1(i);
+
+
   return 0;
 }

@@ -1,16 +1,15 @@
 #include "extra.hpp"
-#include <iostream>
 
 
+void First::hello(int c) { }
+void First::kupa(int c) { }
 
 
-void Temple::next(int a) { this->kupa(4);   }
+void usage1(int i) {
 
-namespace sec_namespace {
- 
- 
- int B::add(int a, int b) {  return a+b;  }
-
+    if(i>6) {
+        i+=4;
+    }
 
 
 }
