@@ -11,9 +11,15 @@ int main(int argc, char **argv) {
    k.kupa(4);
 
 
-   first_namespace::A  a;
 
-   a.multiple(3,4);
+
+   first_namespace::A  a;
+   for(int i=0;i<8;i++) {
+     if (i<9) { a.multiple(3,4); }
+       else { a.next(3); } 
+      
+            
+   }
 
 /*
     sec_namespace::B b;
