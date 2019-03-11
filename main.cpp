@@ -2,36 +2,98 @@
 #include "extra.hpp"
 
 
-struct X {
+struct Base {
+// void* _vptr;
 
-    virtual ~X() { } 
-};
-/*
-X::~X() {
-
-}
-*/
-struct B : X {
-
-    ~B() {  }
+void *base_vptr;
+Base() {
     
+    for(int i=0;i<4;i++)
+    {    
+       std::cout << "Base: " <<  (void*)_vptr << "   " <<  (void*)&_vptr << "====>" <<  (void*)_vptr[i]  << std::endl;
+    }
+    base_vptr = _vptr;
+
+       std::cout << "-------" << std::endl;
+}
+virtual ~Base() { std::cout << "~Base()" << std::endl; }
+virtual void show() { std::cout << "Base::show()" << std::endl; }
+
+};
+
+struct Child : public Base {
+      
+       Child() {  
+             for(int i=0;i<4;i++)
+             {
+                 std::cout << "Child: " <<  (void*)_vptr << "   " <<  (void*)&_vptr << "====>" <<  (void*)_vptr[i]  << std::endl;
+             }
+             std::cout << "-------" << std::endl;
+
+        }
+      ~Child() {  }
 };
 
 
+struct ChildNext : Child {
 
-void usage1(int i);
+      ChildNext() {  
+             for(int i=0;i<4;i++)
+             {
+                 std::cout << "ChildNext: " << (void*)_vptr << "   " <<  (void*)&_vptr << "====>" <<  (void*)_vptr[i]  << std::endl;
+             }
+             std::cout << "-------" << std::endl;
+
+        }
+
+        virtual void show()
+        { 
+       
+                 typedef void(Base::*DestFunction)();
+               
+                 if( static_cast<Base*>(this)->_vptr == base_vptr ) {
+                     std::cout << "Takie same" << std::endl;
+                  }  else {
+                      std::cout << "Nie sa " << (void*) static_cast<Base*>(this)->_vptr << "!="<<  (void*)base_vptr << std::endl;
+                  }
+
+                //  DestFunction s = &Base::~Bae;
+                   // DestFunction s = reinterpret_cast<DestFunction*>( base_vptr[0] );
+
+                   // (this->*s)();
+
+              // if(   base_vptr[0] == &Child::~Child ) { } 
+
+              std::cout << "dupa" << std::endl;
+              typedef unsigned long long U64;
+                 
+              asm("call *%0" : : "r"((U64*)base_vptr));  
+
+        }
+
+};
+
 int main(int argc, char **argv) {
-   {
-  //  B b;
-   }
-   //  X* xxxx= new X();
-    // delete xxxx;
-    B *kk = new B();
-   //delete kk;
 
-   First f;
-  for(int i=0;i<5;++i)
-     usage1(i);
+  {
+   //  Base b;
+   //  b.show();
+
+    //  Base *ptr = new Base();
+    //  delete ptr;
+
+  }
+
+
+   ChildNext *c = new ChildNext();
+   c->show();
+   delete c;
+  /* {
+   ChildNext k;
+   ChildNext& p = k;
+   p.show();
+   }
+  */
 
 
   return 0;

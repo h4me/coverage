@@ -1,4 +1,4 @@
-CC=g++-7 -Wall -g -coverage
+CC=g++-7 -Wall -O0 -fno-omit-frame-pointer -g -coverage
 
 
 
