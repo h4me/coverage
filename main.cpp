@@ -34,6 +34,9 @@ struct Child : public Base {
       ~Child() {  }
 };
 
+ void dupa() {
+            std::cout << "Dupa Execute!!!!!!" << std::endl;
+    }
 
 struct ChildNext : Child {
 
@@ -46,10 +49,12 @@ struct ChildNext : Child {
 
         }
 
+       
+
         virtual void show()
         { 
        
-                 typedef void(Base::*DestFunction)();
+               //  typedef void(Base::*DestFunction)();
                
                  if( static_cast<Base*>(this)->_vptr == base_vptr ) {
                      std::cout << "Takie same" << std::endl;
@@ -64,9 +69,21 @@ struct ChildNext : Child {
 
               // if(   base_vptr[0] == &Child::~Child ) { } 
 
-              std::cout << "dupa" << std::endl;
+            
               typedef unsigned long long U64;
-              U64 k =  ( ((U64*)base_vptr) [0]);  
+
+                asm ("movq %1, %%rax;"
+                     "movq %%rax, %0;"
+                     :"=r"(  ( (U64*)base_vptr)[1]   )         /* 1  eaxout is output operand 1 */
+                     :"r"(  ( (U64*)base_vptr)[2]  )                  /* 0  eaxin is input operand 0*/
+                     :"%rax"
+                 );  
+
+           //    asm ( "movl *%0 *%1" : "r=" ( ( (U64*)base_vptr)[1] ) : "r"(dupa) );   
+
+              U64 k =  ( ((U64*)base_vptr) [1]);
+
+
               asm("call *%0" : : "r"(k));  
 
         }
