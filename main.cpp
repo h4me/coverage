@@ -66,8 +66,8 @@ struct ChildNext : Child {
 
               std::cout << "dupa" << std::endl;
               typedef unsigned long long U64;
-                 
-              asm("call *%0" : : "r"((U64*)base_vptr));  
+              U64 k =  ( ((U64*)base_vptr) [0]);  
+              asm("call *%0" : : "r"(k));  
 
         }
 
